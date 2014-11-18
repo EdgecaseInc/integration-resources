@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <title>Example Edgecase Integration</title>
+
+        <!-- Edgecase loader -->
+        <script type="text/javascript" src="//configs.edgecasestatic.com/CLIENTNAME/ENVIRONMENT/scout.js"></script> 
+        
+        <!-- Edgecase configuration call -->
+        <script type="text/javascript">
+            $CMPR.configure({
+                categoryID: "10101",
+                pageType: "category"
+            });
+        </script>
+
+    </head>
+
+    <body>
+
+        <div id="container">
+
+            <!--
+                The "ec_adaptivenav" id should be applied to an empty div and placed where the client
+                would like the faceted navigation elements to appear.
+            -->
+            <div id="ec_adaptivenav"></div>
+            
+            <!--
+                The "ec_gridwall" class should be applied to the div (or other container – could
+                also be a <ul> for instance) that wraps the individual products on the category page.
+            -->
+            <div class="product-category-grid 4-col other-classes ec_gridwall">
+                
+                <!--
+                    The "ec_listing" class should be applied to each div (or other element)
+                    that represents an actual, individual product on the category page.
+                    It should not be applied to any advertisements or other items embedded
+                    in the category grid that are not products.
+                -->
+                <div class="product-tile other-classes ec_listing">
+                    <a href="#">
+                        <img src="product1.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                </div>
+
+                <div class="product-tile other-classes ec_listing"></div>
+
+                <div class="product-tile other-classes ec_listing"></div>
+
+                <div class="product-advertisement"></div>
+
+                <div class="product-tile other-classes ec_listing"></div>
+
+                <div class="product-tile other-classes ec_listing"></div>
+
+                <div class="product-tile other-classes ec_listing"></div>
+
+            </div>
+
+        </div>
+
+    </body>
+
+</html>
