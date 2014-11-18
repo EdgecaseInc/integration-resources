@@ -5,13 +5,24 @@
 
         <title>Example Edgecase Integration</title>
 
-        <!-- Edgecase loader -->
+        <!-- 
+            Edgecase loader
+            
+            WHERE:
+             * CLIENTNAME is the Edgecase-supplied client token
+             * ENVIRONMENT is one of "staging" or "production"
+        -->
         <script type="text/javascript" src="//configs.edgecasestatic.com/CLIENTNAME/ENVIRONMENT/scout.js"></script> 
         
-        <!-- Edgecase configuration call -->
+        <!--
+            Edgecase configuration call
+        
+            WHERE:
+             * CATEGORYID is the ID of the category currently being viewed
+        -->
         <script type="text/javascript">
             $CMPR.configure({
-                categoryID: "10101",
+                categoryID: "CATEGORYID",
                 pageType: "category"
             });
         </script>
