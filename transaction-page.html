@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+    This example shows the code necessary to inject the Edgecase Adaptive Navigation
+    experience on the transaction page of a retailer's website.
+
+    Copyright 2014 Edgecase, Inc.
+
+    Unless required by applicable law or agreed to in writing, the example code
+    below is provided "as is" without warranty of any kind, either express or
+    implied, including without limitation any implied warranties of condition,
+    uninterrupted use, merchantability, or fitness for a particular purpose.
+-->
+<html>
+
+    <head>
+
+        <title>Example Edgecase Integration</title>
+
+        <!--
+            The Edgecase "scout" should be placed near the top of your page head,
+            and should not be included in any caching mechanism (i.e., CloudFlare)
+            and should not have any extra cache-busting parameters added to the URL.
+            
+            WHERE:
+             * CLIENTNAME is the Edgecase-supplied client token
+             * ENVIRONMENT is one of "staging" or "production"
+        -->
+        <script type="text/javascript" src="//configs.edgecasestatic.com/CLIENTNAME/ENVIRONMENT/scout.js"></script> 
+        
+        <!--
+            The Edgecase "$CMPR.configure" call should be placed just after the "scout".
+            Note that this piece of the integration code is optional; your Edgecase
+            Implementation Specialist can help you determine if a "$CMPR.configure"
+            call should be used on your category pages.
+        
+            WHERE:
+             * pageType is set to "transaction"
+        -->
+        <script type="text/javascript">
+            $CMPR.configure({
+                pageType: "transaction"
+            });
+        </script>
+
+
+
+        <!--
+            The "$CMPR.transaction" calls can be placed anywhere on your transaction page.
+            These calls are necessary for proper analytics on the effectiveness of the
+            Edgecase Adaptive Navigation, and are modeled in form and function after
+            Google's Ecommmerce Tracking API.
+
+            For more information:
+            https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce
+        -->
+        <script type="text/javascript">
+            
+            // Start the transaction with "$CMPR.transaction.addTransaction"
+            //
+            $CMPR.transaction.addTransaction(
+                "21",         // order ID - required
+                "yourStore",  // affiliation or store name
+                24.95,        // total - required
+                5.00,         // tax
+                2.99,         // shipping
+                "Austin",     // city
+                "TX",         // state or province
+                "US"          // country
+            );
+            
+            // For each item in the user's order, make a "$CMPR.transaction.addItem" call
+            //
+            $CMPR.transaction.addItem(
+                "21",       // order ID - required
+                "987654",   // product ID - required
+                "Mouse",    // product name
+                "cat_1",    // category ID - required
+                11.99,      // unit price - required
+                1           // quantity - required
+            );
+
+            $CMPR.transaction.addItem(
+                "21",        // order ID - required
+                "653446",    // product ID - required
+                "Keyboard",  // product name
+                "cat_2",     // category ID - required
+                24.99,       // unit price - required
+                1            // quantity - required
+            );
+
+            // Finalize the transaction with "$CMPR.transaction.trackTransaction"
+            //
+            $CMPR.transaction.trackTransaction();
+
+        </script>
+
+    </head>
+
+    <body>
+
+        <!--
+            No other Edgecase-specific code is necessary for transaction page integrations.
+        -->
+
+    </body>
+
+</html>
