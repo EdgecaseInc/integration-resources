@@ -3,6 +3,11 @@
     This example shows the code necessary to inject the Edgecase Adaptive Navigation
     experience on the transaction page of a retailer's website.
 
+    On the transaction page, the Edgecase Adaptive Navigation solution doesn't draw
+    any UI elements. The transaction page integration allows Edgecase to track users
+    that interacted with the Edgecase solution through the purchase funnel, and
+    includes transaction events to Edgecase for analytics and reporting purposes.
+
     Copyright 2014 Edgecase, Inc.
 
     Unless required by applicable law or agreed to in writing, the example code
@@ -17,9 +22,12 @@
         <title>Example Edgecase Integration</title>
 
         <!--
-            The Edgecase "scout" should be placed near the top of your page head,
-            and should not be included in any caching mechanism (i.e., CloudFlare)
-            and should not have any extra cache-busting parameters added to the URL.
+            The Edgecase "scout" is a small (2-3K) loader for the rest of the resources
+            necessary to load the Edgecase Adaptive Navigation solution.
+
+            IMPORTANT: The scout should not be included in any caching mechanism
+            (i.e., CloudFlare) and should not have any extra cache-busting parameters
+            added to the URL.
             
             WHERE:
              * CLIENTNAME is the Edgecase-supplied client token
@@ -48,15 +56,20 @@
             Edgecase Adaptive Navigation, and are modeled in form and function after
             Google's Ecommmerce Tracking API.
 
+            IMPORTANT: Arguments for these methods are matched by position, so be sure to
+            supply all parameters even if some of them have an empty value!
+
             For more information:
             https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce
         -->
         <script type="text/javascript">
             
-            // Start the transaction with "$CMPR.transaction.addTransaction"
+            // Start the transaction with "$CMPR.transaction.addTransaction", providing
+            // the order information parameters described below. Note that the user's
+            // billing address should be used for the city/state/country fields.
             //
             $CMPR.transaction.addTransaction(
-                "21",         // order ID - required
+                "21",         // order ID - required, and should match your internal ID for this order
                 "yourStore",  // affiliation or store name
                 43.02,        // total - required
                 3.05,         // tax
@@ -66,27 +79,27 @@
                 "US"          // country
             );
             
-            // For each item in the user's order, make a "$CMPR.transaction.addItem" call
+            // For each item in the user's order, make a "$CMPR.transaction.addItem" call.
             //
             $CMPR.transaction.addItem(
-                "21",       // order ID - required
-                "987654",   // product ID - required
-                "Mouse",    // product name
-                "cat_1",    // category ID - required
-                11.99,      // unit price - required
-                1           // quantity - required
+                "21",         // order ID - required
+                "987654",     // product ID - required
+                "Mouse",      // product name
+                "cat_1",      // category ID - required
+                11.99,        // unit price - required
+                1             // quantity - required
             );
 
             $CMPR.transaction.addItem(
-                "21",        // order ID - required
-                "653446",    // product ID - required
-                "Keyboard",  // product name
-                "cat_2",     // category ID - required
-                24.99,       // unit price - required
-                1            // quantity - required
+                "21",         // order ID - required
+                "653446",     // product ID - required
+                "Keyboard",   // product name
+                "cat_2",      // category ID - required
+                24.99,        // unit price - required
+                1             // quantity - required
             );
 
-            // Finalize the transaction with "$CMPR.transaction.trackTransaction"
+            // Push the transaction event with "$CMPR.transaction.trackTransaction".
             //
             $CMPR.transaction.trackTransaction();
 

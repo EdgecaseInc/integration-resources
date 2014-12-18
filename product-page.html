@@ -3,6 +3,10 @@
     This example shows the code necessary to inject the Edgecase Adaptive Navigation
     experience on the product page of a retailer's website.
 
+    On the product page, the Edgecase Adaptive Navigation solution doesn't draw any
+    UI elements; the product page integration simply allows Edgecase to track users
+    that interacted with the Edgecase solution through the purchase funnel.
+
     Copyright 2014 Edgecase, Inc.
 
     Unless required by applicable law or agreed to in writing, the example code
@@ -17,9 +21,12 @@
         <title>Example Edgecase Integration</title>
 
         <!--
-            The Edgecase "scout" should be placed near the top of your page head,
-            and should not be included in any caching mechanism (i.e., CloudFlare)
-            and should not have any extra cache-busting parameters added to the URL.
+            The Edgecase "scout" is a small (2-3K) loader for the rest of the resources
+            necessary to load the Edgecase Adaptive Navigation solution.
+
+            IMPORTANT: The scout should not be included in any caching mechanism
+            (i.e., CloudFlare) and should not have any extra cache-busting parameters
+            added to the URL.
             
             WHERE:
              * CLIENTNAME is the Edgecase-supplied client token

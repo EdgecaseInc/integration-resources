@@ -3,6 +3,11 @@
     This example shows the code necessary to inject the Edgecase Adaptive Navigation
     experience on the category page of a retailer's website.
 
+    On the category page, the Edgecase Adaptive Navigation solution will be replacing
+    any native filtering and sorting options currently available, and once a user
+    selects a filter from the Edgecase solution, will be re-drawing the category
+    gridwall with products that match the user's selection.
+
     Copyright 2014 Edgecase, Inc.
 
     Unless required by applicable law or agreed to in writing, the example code
@@ -17,9 +22,15 @@
         <title>Example Edgecase Integration</title>
 
         <!--
-            The Edgecase "scout" should be placed near the top of your page head,
-            and should not be included in any caching mechanism (i.e., CloudFlare)
-            and should not have any extra cache-busting parameters added to the URL.
+            The Edgecase "scout" is a small (2-3K) loader for the rest of the resources
+            necessary to load the Edgecase Adaptive Navigation solution.
+
+            IMPORTANT: On category pages, the Edgecase Adaptive Navigation solution will
+            replace the default product browsing experience, and our goal is always to
+            create a better experience for users. In light of this, the scout *must* be
+            loaded early in your page head, should not be included in any caching
+            mechanism (i.e., CloudFlare), and should not have any extra cache-busting
+            parameters added to the URL.
             
             WHERE:
              * CLIENTNAME is the Edgecase-supplied client token
