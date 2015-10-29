@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
     This example shows the code necessary to inject the Edgecase Adaptive Navigation
-    experience on the transaction page of a retailer's website.
+    solution on the transaction page of a retailer's website.
 
     On the transaction page, the Edgecase Adaptive Navigation solution doesn't draw
     any UI elements. The transaction page integration allows Edgecase to track users
@@ -22,36 +22,36 @@
         <title>Example Edgecase Integration</title>
 
         <!--
-            The Edgecase "scout" is a small (2-3K) loader for the rest of the resources
+            The Edgecase "scout" is a small (>6k) loader for the rest of the resources
             necessary to load the Edgecase Adaptive Navigation solution.
 
             IMPORTANT: The scout should not be included in any caching mechanism
             (i.e., CloudFlare) and should not have any extra cache-busting parameters
             added to the URL.
-            
+
             WHERE:
              * CLIENTNAME is the Edgecase-supplied client token
              * ENVIRONMENT is one of "staging" or "production"
         -->
-        <script type="text/javascript" src="//configs.edgecasestatic.com/CLIENTNAME/ENVIRONMENT/scout.js"></script> 
-        
+        <script type="text/javascript" src="//configs.edgecasestatic.com/CLIENTNAME/ENVIRONMENT/scout.js"></script>
+
         <!--
-            The Edgecase "$CMPR.configure" call should be placed just after the "scout".
+            The Edgecase "$EC.configure" call should be placed just after the "scout".
             Note that this piece of the integration code is optional; your Edgecase
-            Implementation Specialist can help you determine if a "$CMPR.configure"
+            Implementation Specialist can help you determine if a "$EC.configure"
             call should be used on your category pages.
-        
+
             WHERE:
              * pageType is set to "transaction"
         -->
         <script type="text/javascript">
-            $CMPR.configure({
+            $EC.configure({
                 pageType: "transaction"
             });
         </script>
 
         <!--
-            The "$CMPR.transaction" calls can be placed anywhere on your transaction page.
+            The "$EC.transaction" calls can be placed anywhere on your transaction page.
             These calls are necessary for proper analytics on the effectiveness of the
             Edgecase Adaptive Navigation, and are modeled in form and function after
             Google's Ecommmerce Tracking API.
@@ -63,12 +63,12 @@
             https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce
         -->
         <script type="text/javascript">
-            
-            // Start the transaction with "$CMPR.transaction.addTransaction", providing
+
+            // Start the transaction with "$EC.transaction.addTransaction", providing
             // the order information parameters described below. Note that the user's
             // billing address should be used for the city/state/country fields.
             //
-            $CMPR.transaction.addTransaction(
+            $EC.transaction.addTransaction(
                 "21",         // order ID - required, and should match your internal ID for this order
                 "yourStore",  // affiliation or store name
                 43.02,        // total - required
@@ -78,10 +78,10 @@
                 "TX",         // state or province
                 "US"          // country
             );
-            
-            // For each item in the user's order, make a "$CMPR.transaction.addItem" call.
+
+            // For each item in the user's order, make a "$EC.transaction.addItem" call.
             //
-            $CMPR.transaction.addItem(
+            $EC.transaction.addItem(
                 "21",         // order ID - required
                 "987654",     // product ID - required
                 "Mouse",      // product name
@@ -90,7 +90,7 @@
                 1             // quantity - required
             );
 
-            $CMPR.transaction.addItem(
+            $EC.transaction.addItem(
                 "21",         // order ID - required
                 "653446",     // product ID - required
                 "Keyboard",   // product name
@@ -99,9 +99,9 @@
                 1             // quantity - required
             );
 
-            // Push the transaction event with "$CMPR.transaction.trackTransaction".
+            // Push the transaction event with "$EC.transaction.trackTransaction".
             //
-            $CMPR.transaction.trackTransaction();
+            $EC.transaction.trackTransaction();
 
         </script>
 
