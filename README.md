@@ -14,6 +14,6 @@ Example product and category hierarchy feeds.
 
 ---
 
-_Copyright 2015 Edgecase, Inc.__
+_Copyright 2015 Edgecase, Inc._
 
-_Unless required by applicable law or agreed to in writing, the example code in this repository is provided "as is" without warranty of any kind, either express or implied, including without limitation any implied warranties of condition, uninterrupted use, merchantability, or fitness for a particular purpose.__
+_Unless required by applicable law or agreed to in writing, the example code in this repository is provided "as is" without warranty of any kind, either express or implied, including without limitation any implied warranties of condition, uninterrupted use, merchantability, or fitness for a particular purpose._
