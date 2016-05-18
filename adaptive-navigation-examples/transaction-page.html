@@ -51,57 +51,53 @@
         </script>
 
         <!--
-            The "$EC.transaction" calls can be placed anywhere on your transaction page.
+            The "$EC.track" calls can be placed anywhere on your transaction page.
             These calls are necessary for proper analytics on the effectiveness of the
-            Edgecase Adaptive Navigation, and are modeled in form and function after
+            Edgecase-enriched data, and are modeled in form and function after
             Google's Ecommmerce Tracking API.
 
-            IMPORTANT: Arguments for these methods are matched by position, so be sure to
-            supply all parameters even if some of them have an empty value!
-
             For more information:
-            https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce
+            https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce
         -->
         <script type="text/javascript">
 
-            // Start the transaction with "$EC.transaction.addTransaction", providing
-            // the order information parameters described below. Note that the user's
-            // billing address should be used for the city/state/country fields.
+            // Start the transaction with "transaction:addTransaction", providing
+            // the order information parameters described below.
             //
-            $EC.transaction.addTransaction(
-                "21",         // order ID - required, and should match your internal ID for this order
-                "yourStore",  // affiliation or store name
-                36.98,        // total - required, and does not include tax and shipping
-                3.05,         // tax
-                2.99,         // shipping
-                "Austin",     // city
-                "TX",         // state or province
-                "US"          // country
-            );
+            $EC.track('transaction:addTransaction', {
+                id: "9546549651",               // order ID, required
+                affiliation: "Store Name",      // store name or other affiliation name
+                revenue: 31.97,                 // total (does not include tax and shipping), required
+                shipping: 4.99,                 // shipping amount, required
+                tax: 2.64,                      // tax amount, required
+                city: "Austin",                 // billing city
+                state: "TX",                    // billing state
+                country: "US"                   // billing country
+            });
 
-            // For each item in the user's order, make a "$EC.transaction.addItem" call.
+            // For each item in the user's order, make a "transaction:addItem" call.
             //
-            $EC.transaction.addItem(
-                "21",         // order ID - required
-                "987654",     // product ID - required
-                "Mouse",      // product name
-                "cat_1",      // category ID - required
-                11.99,        // unit price - required
-                1             // quantity - required
-            );
+            $EC.track('transaction:addItem', {
+                id: "9546549651",               // order ID, required
+                sku: "pid882984",               // product ID, required
+                name: "Fantastic Product",      // product name, required
+                category: "3928",               // product category ID
+                price: 12.99,                   // unit price, required
+                quantity: 2                     // quantity, required
+            });
 
-            $EC.transaction.addItem(
-                "21",         // order ID - required
-                "653446",     // product ID - required
-                "Keyboard",   // product name
-                "cat_2",      // category ID - required
-                24.99,        // unit price - required
-                1             // quantity - required
-            );
+            $EC.track('transaction:addItem', {
+                id: "9546549651",               // order ID, required
+                sku: "pid231689",               // product ID, required
+                name: "Some other Product",     // product name, required
+                category: "4354",               // product category ID
+                price: 5.99,                    // unit price, required
+                quantity: 1                     // quantity, required
+            });
 
-            // Push the transaction event with "$EC.transaction.trackTransaction".
+            // Push the transaction event
             //
-            $EC.transaction.trackTransaction();
+            $EC.track('send', 'transaction');
 
         </script>
 
