@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--
+    This example shows the code necessary to utilize the Edgecase Universal Tracking
+    Beacon on the category page of a retailer's website.
+
+    On the category page, the Edgecase Universal Tracking Beacon is used to track
+    which products have been displayed to a user and in what order (rank) they were
+    displayed. Additionally, a user's interactions with any filtering controls are
+    tracked to provide filter effectiveness reports.
+
+    Copyright 2016 Edgecase, Inc.
+
+    Unless required by applicable law or agreed to in writing, the example code
+    below is provided "as is" without warranty of any kind, either express or
+    implied, including without limitation any implied warranties of condition,
+    uninterrupted use, merchantability, or fitness for a particular purpose.
+-->
+<html>
+
+    <head>
+
+        <title>Example Edgecase Universal Tracking Beacon Integration</title>
+
+        <!--
+            The Edgecase "scout" is a small (>6k) loader for the rest of the resources
+            necessary to load the Edgecase Universal Tracking Beacon.
+
+            WHERE:
+             * CLIENTNAME is the Edgecase-supplied client token
+             * ENVIRONMENT is one of "staging" or "production"
+        -->
+        <script type="text/javascript" src="//configs.edgecasestatic.com/CLIENTNAME/ENVIRONMENT/scout.js"></script>
+
+        <!--
+            The Edgecase "$EC.configure" call should be placed after the scout.js loader.
+            Note that this piece of the integration code is optional; your Edgecase
+            Implementation Specialist can help you determine if an "$EC.configure"
+            call should be used on your category pages.
+
+            WHERE:
+             * CATEGORYID is the ID of the category currently being viewed (should match
+               the category ID provided in your product feed)
+             * pageType is set to "category"
+        -->
+        <script type="text/javascript">
+            $EC.configure({
+                pageType: 'search',
+                query: 'search term'
+            });
+        </script>
+
+    </head>
+
+    <body>
+
+        <div id="container">
+
+            <!--
+                The "$EC.track" calls can be placed anywhere on your search results page.
+                These calls are necessary for proper analytics on the effectiveness of the
+                Edgecase-enriched data.
+
+                Three types of calls are used to collect product impression data, and must
+                be used in the following order:
+                 * 'searchResults:addResults'
+                 * 'searchResults:addProduct'
+                 * 'send'
+
+                These calls are documented below, in order of their execution on a typical
+                search results page. Note that while the example shows how a page might be
+                rendered server-side with values already in-place, a client-side
+                programmatic approach can also be used.
+
+            -->
+
+            <script type="text/javascript">
+                // Start the product impression tracking  with "searchResults:addResults",
+                // providing the parameters described below.
+                //
+                $EC.track('searchResults:addResults', {
+                    query: 'search terms',   // for search results pages, [query] should be the search terms
+                    method: 'search',        // for search results pages, the [method] should be "search"
+                    num_results: 152,        // the total number of products returned by this searchResults
+                    page_size: 16,           // the number of products visble on this page
+                    page: 1                  // the page number currently being viewed
+                });
+            </script>
+
+            <div class="product-category-grid">
+
+                <div class="product-tile" id="pid1838">
+                    <a href="#">
+                        <img src="product-pid1838.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                    <script type="text/javascript">
+                        // For each product on the page, make a "searchResults:addProduct"
+                        // call, passing the product ID as the second parameter.
+                        //
+                        $EC.track('searchResults:addProduct', 'pid1838');
+                    </script>
+                </div>
+
+                <div class="product-tile" id="pid6574">
+                    <a href="#">
+                        <img src="product-pid6574.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                    <script type="text/javascript">
+                        // For each product on the page, make a "searchResults:addProduct"
+                        // call, passing the product ID as the second parameter.
+                        //
+                        $EC.track('searchResults:addProduct', 'pid6574');
+                    </script>
+                </div>
+
+                <div class="product-tile" id="pid5746">
+                    <a href="#">
+                        <img src="product-pid5746.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                    <script type="text/javascript">
+                        // For each product on the page, make a "searchResults:addProduct"
+                        // call, passing the product ID as the second parameter.
+                        //
+                        $EC.track('searchResults:addProduct', 'pid5746');
+                    </script>
+                </div>
+
+                <div class="product-tile" id="pid1394">
+                    <a href="#">
+                        <img src="product-pid1394.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                    <script type="text/javascript">
+                        // For each product on the page, make a "searchResults:addProduct"
+                        // call, passing the product ID as the second parameter.
+                        //
+                        $EC.track('searchResults:addProduct', 'pid1394');
+                    </script>
+                </div>
+
+                <div class="product-tile" id="pid2367">
+                    <a href="#">
+                        <img src="product-pid2367.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                    <script type="text/javascript">
+                        // For each product on the page, make a "searchResults:addProduct"
+                        // call, passing the product ID as the second parameter.
+                        //
+                        $EC.track('searchResults:addProduct', 'pid2367');
+                    </script>
+                </div>
+
+            </div>
+
+            <script type="text/javascript">
+                // Push the impression event
+                //
+                $EC.track('send', 'searchResults');
+            </script>
+
+        </div>
+
+    </body>
+
+</html>

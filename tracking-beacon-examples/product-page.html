@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+    This example shows the code necessary to utilize the Edgecase Universal Tracking
+    Beacon on the product page of a retailer's website.
+
+    On the product page, the Edgecase Universal Tracking Beacon is simply used to
+    track users though the purchase funnel.
+
+    Copyright 2016 Edgecase, Inc.
+
+    Unless required by applicable law or agreed to in writing, the example code
+    below is provided "as is" without warranty of any kind, either express or
+    implied, including without limitation any implied warranties of condition,
+    uninterrupted use, merchantability, or fitness for a particular purpose.
+-->
+<html>
+
+    <head>
+
+        <title>Example Edgecase Universal Tracking Beacon Integration</title>
+
+        <!--
+            The Edgecase "scout" is a small (>6k) loader for the rest of the resources
+            necessary to load the Edgecase Adaptive Navigation solution.
+
+            IMPORTANT: The scout should not be included in any caching mechanism
+            (i.e., CloudFlare) and should not have any extra cache-busting parameters
+            added to the URL.
+
+            WHERE:
+             * CLIENTNAME is the Edgecase-supplied client token
+             * ENVIRONMENT is one of "staging" or "production"
+        -->
+        <script type="text/javascript" src="//configs.edgecasestatic.com/CLIENTNAME/ENVIRONMENT/scout.js"></script>
+
+        <!--
+            The Edgecase "$EC.configure" call should be placed after the scout.js loader.
+            Note that this piece of the integration code is optional; your Edgecase
+            Implementation Specialist can help you determine if a "$EC.configure"
+            call should be used on your product pages.
+
+            WHERE:
+             * PRODUCTID is the ID of the product currently being viewed (should match
+               the product ID provided in your product feed)
+             * CATEGORYID is the ID of the category for the product currently being
+               viewed (should match the category ID provided in your product feed)
+             * pageType is set to "product"
+        -->
+        <script type="text/javascript">
+            $EC.configure({
+                productID: 'PRODUCTID',
+                categoryID: 'CATEGORYID',
+                pageType: 'product'
+            });
+        </script>
+
+    </head>
+
+    <body>
+
+        <!--
+            No other Edgecase-specific code is necessary for product page integrations.
+        -->
+
+    </body>
+
+</html>
