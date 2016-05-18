@@ -55,6 +55,62 @@
 
         <div id="container">
 
+            <div id="total-results-count">184</div>
+
+            <div class="product-category-grid">
+
+                <div class="product-tile" id="pid1838">
+                    <a href="#">
+                        <img src="product-pid1838.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                </div>
+
+                <div class="product-tile" id="pid6574">
+                    <a href="#">
+                        <img src="product-pid6574.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                </div>
+
+                <div class="product-tile" id="pid5746">
+                    <a href="#">
+                        <img src="product-pid5746.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                </div>
+
+                <div class="product-tile" id="pid1394">
+                    <a href="#">
+                        <img src="product-pid1394.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                </div>
+
+                <div class="product-tile" id="pid2367">
+                    <a href="#">
+                        <img src="product-pid2367.jpg">
+                    </a>
+                    <div class="product-name">Product Name</div>
+                    <button>Buy Now</button>
+                </div>
+
+            </div>
+
+            <div id="paginator">
+                <ul>
+                    <li class="current">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                </ul>
+            </div>
+
             <!--
                 The "$EC.track" calls can be placed anywhere on your category page.
                 These calls are necessary for proper analytics on the effectiveness of the
@@ -68,102 +124,43 @@
 
                 These calls are documented below, in order of their execution on a typical
                 category page. Note that while the example shows how a page might be rendered
-                server-side with values already in-place, a client-side programmatic approach
-                can also be used; see category-page-alt.html in this directory for an example.
+                client-side using a programmatic approach, note that populating the data for
+                these requests on the server side is also possible; see category-page.html
+                in this directory for an example.
 
             -->
 
             <script type="text/javascript">
-                // Start the product impression tracking  with "searchResults:addResults",
-                // providing the parameters described below.
-                //
-                $EC.track('searchResults:addResults', {
-                    query: 'Category Name',  // for category pages, [query] should be the category name
-                    method: 'browse',        // for category pages, the [method] should be "browse"
-                    num_results: 152,        // the total number of products available in this category
-                    page_size: 16,           // the number of products visble on this page
-                    page: 1                  // the page number currently being viewed
-                });
-            </script>
 
-            <div class="product-category-grid">
+                var numResults = Number(document.querySelector('#total-results-count').textContent),
+                    productList = document.querySelectorAll('.product-category-grid > .product-tile'),
+                    pageNum = Number(document.querySelector('#paginator .current').textContent);
 
-                <div class="product-tile" id="pid1838">
-                    <a href="#">
-                        <img src="product-pid1838.jpg">
-                    </a>
-                    <div class="product-name">Product Name</div>
-                    <button>Buy Now</button>
-                    <script type="text/javascript">
-                        // For each product on the page, make a "searchResults:addProduct"
-                        // call, passing the product ID as the second parameter.
-                        //
-                        $EC.track('searchResults:addProduct', 'pid1838');
-                    </script>
-                </div>
+                if (productList.length > 0) {
 
-                <div class="product-tile" id="pid6574">
-                    <a href="#">
-                        <img src="product-pid6574.jpg">
-                    </a>
-                    <div class="product-name">Product Name</div>
-                    <button>Buy Now</button>
-                    <script type="text/javascript">
-                        // For each product on the page, make a "searchResults:addProduct"
-                        // call, passing the product ID as the second parameter.
-                        //
-                        $EC.track('searchResults:addProduct', 'pid6574');
-                    </script>
-                </div>
+                    // Start the product impression tracking  with "searchResults:addResults",
+                    // providing the parameters described below.
+                    //
+                    $EC.track('searchResults:addResults', {
+                        query: 'Category Name',      // for category pages, [query] should be the category name
+                        method: 'browse',            // for category pages, the [method] should be "browse"
+                        num_results: numResults,     // the total number of products available in this category
+                        page_size: products.length,  // the number of products visble on this page
+                        page: pageNum                // the page number currently being viewed
+                    });
 
-                <div class="product-tile" id="pid5746">
-                    <a href="#">
-                        <img src="product-pid5746.jpg">
-                    </a>
-                    <div class="product-name">Product Name</div>
-                    <button>Buy Now</button>
-                    <script type="text/javascript">
-                        // For each product on the page, make a "searchResults:addProduct"
-                        // call, passing the product ID as the second parameter.
-                        //
-                        $EC.track('searchResults:addProduct', 'pid5746');
-                    </script>
-                </div>
+                    // For each product on the page, make a "searchResults:addProduct"
+                    // call, passing the product ID as the second parameter.
+                    //
+                    for (var i = 0; i < products.length; i++) {
+                        $EC.track('searchResults:addProduct', products[i].id);
+                    }
 
-                <div class="product-tile" id="pid1394">
-                    <a href="#">
-                        <img src="product-pid1394.jpg">
-                    </a>
-                    <div class="product-name">Product Name</div>
-                    <button>Buy Now</button>
-                    <script type="text/javascript">
-                        // For each product on the page, make a "searchResults:addProduct"
-                        // call, passing the product ID as the second parameter.
-                        //
-                        $EC.track('searchResults:addProduct', 'pid1394');
-                    </script>
-                </div>
+                    // Push the impression event
+                    //
+                    $EC.track('send', 'searchResults');
 
-                <div class="product-tile" id="pid2367">
-                    <a href="#">
-                        <img src="product-pid2367.jpg">
-                    </a>
-                    <div class="product-name">Product Name</div>
-                    <button>Buy Now</button>
-                    <script type="text/javascript">
-                        // For each product on the page, make a "searchResults:addProduct"
-                        // call, passing the product ID as the second parameter.
-                        //
-                        $EC.track('searchResults:addProduct', 'pid2367');
-                    </script>
-                </div>
-
-            </div>
-
-            <script type="text/javascript">
-                // Push the impression event
-                //
-                $EC.track('send', 'searchResults');
+                }
             </script>
 
         </div>
