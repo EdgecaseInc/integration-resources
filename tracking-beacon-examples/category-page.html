@@ -66,6 +66,10 @@
                  * 'searchResults:addProduct'
                  * 'send'
 
+                Two additional types of calls are used to collect filter interaction data:
+                 * 'filterAction:select'
+                 * 'filterAction:unselect'
+
                 These calls are documented below, in order of their execution on a typical
                 category page. Note that while the example shows how a page might be rendered
                 server-side with values already in-place, a client-side programmatic approach
@@ -160,13 +164,60 @@
 
             </div>
 
-            <script type="text/javascript">
-                // Push the impression event
-                //
-                $EC.track('send', 'searchResults');
-            </script>
+            <div id="leftnav" class="filters">
+                <div class="filter">
+                    <span class="filter-header">Filter 1 Name</span>
+                    <ul>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value1"> Filter value 1</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value2"> Filter value 2</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value3"> Filter value 3</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value4"> Filter value 4</label></li>
+                    </ul>
+                </div>
+                <div class="filter">
+                    <span class="filter-header">Filter 2 Name</span>
+                    <ul>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value1"> Filter value 1</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value2"> Filter value 2</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value3"> Filter value 3</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value4"> Filter value 4</label></li>
+                    </ul>
+                </div>
+                <div class="filter">
+                    <span class="filter-header">Filter 3 Name</span>
+                    <ul>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value1"> Filter value 1</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value2"> Filter value 2</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value3"> Filter value 3</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value4"> Filter value 4</label></li>
+                    </ul>
+                </div>
+            </div>
 
         </div>
+
+        <script type="text/javascript">
+
+            // Push the impression event
+            //
+            $EC.track('send', 'searchResults');
+
+            // BEGIN filter interaction event logic
+            jQuery('.filters .filter-value').on('click', function() {
+
+              var filterName = jQuery(this).closest('.filter-header').text().trim();
+              var filterValue = jQuery(this).find('label').text().trim();
+              var action = jQuery(this).find('input[type=checkbox]').prop('checked') ? 'select' : 'unselect'
+
+              $EC.track('filterAction:' + action, {
+                filterName: filterName,
+                filterValue: filterValue
+              });
+
+            });
+            // END filter interaction event logic
+
+        </script>
 
     </body>
 

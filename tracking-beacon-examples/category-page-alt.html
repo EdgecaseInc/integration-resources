@@ -101,69 +101,121 @@
 
             </div>
 
-            <div id="paginator">
-                <ul>
-                    <li class="current">1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                </ul>
+            <div id="leftnav" class="filters">
+                <div class="filter">
+                    <span class="filter-header">Filter 1 Name</span>
+                    <ul>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value1"> Filter value 1</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value2"> Filter value 2</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value3"> Filter value 3</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter1" value="value4"> Filter value 4</label></li>
+                    </ul>
+                </div>
+                <div class="filter">
+                    <span class="filter-header">Filter 2 Name</span>
+                    <ul>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value1"> Filter value 1</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value2"> Filter value 2</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value3"> Filter value 3</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter2" value="value4"> Filter value 4</label></li>
+                    </ul>
+                </div>
+                <div class="filter">
+                    <span class="filter-header">Filter 3 Name</span>
+                    <ul>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value1"> Filter value 1</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value2"> Filter value 2</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value3"> Filter value 3</label></li>
+                        <li class="filter-value"><label><input type="checkbox" name="filter3" value="value4"> Filter value 4</label></li>
+                    </ul>
+                </div>
             </div>
 
-            <!--
-                The "$EC.track" calls can be placed anywhere on your category page.
-                These calls are necessary for proper analytics on the effectiveness of the
-                Edgecase-enriched data.
-
-                Three types of calls are used to collect product impression data, and must
-                be used in the following order:
-                 * 'searchResults:addResults'
-                 * 'searchResults:addProduct'
-                 * 'send'
-
-                These calls are documented below, in order of their execution on a typical
-                category page. Note that while the example shows how a page might be rendered
-                client-side using a programmatic approach, note that populating the data for
-                these requests on the server side is also possible; see category-page.html
-                in this directory for an example.
-
-            -->
-
-            <script type="text/javascript">
-
-                var numResults = Number(document.querySelector('#total-results-count').textContent),
-                    productList = document.querySelectorAll('.product-category-grid > .product-tile'),
-                    pageNum = Number(document.querySelector('#paginator .current').textContent);
-
-                if (productList.length > 0) {
-
-                    // Start the product impression tracking  with "searchResults:addResults",
-                    // providing the parameters described below.
-                    //
-                    $EC.track('searchResults:addResults', {
-                        method: 'browse',            // for category pages, the [method] should be "browse"
-                        query: 'Category Name',      // for category pages, [query] should be the category name
-                        num_results: numResults,     // the total number of products available in this category
-                        page_size: products.length,  // the number of products visble on this page
-                        page: pageNum                // the page number currently being viewed
-                    });
-
-                    // For each product on the page, make a "searchResults:addProduct"
-                    // call, passing the product ID as the second parameter.
-                    //
-                    for (var i = 0; i < products.length; i++) {
-                        $EC.track('searchResults:addProduct', products[i].id);
-                    }
-
-                    // Push the impression event
-                    //
-                    $EC.track('send', 'searchResults');
-
-                }
-            </script>
-
         </div>
+
+        <div id="paginator">
+            <ul>
+                <li class="current">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+
+        <!--
+            The "$EC.track" calls can be placed anywhere on your category page.
+            These calls are necessary for proper analytics on the effectiveness of the
+            Edgecase-enriched data.
+
+            Three types of calls are used to collect product impression data, and must
+            be used in the following order:
+             * 'searchResults:addResults'
+             * 'searchResults:addProduct'
+             * 'send'
+
+            Two additional types of calls are used to collect filter interaction data:
+             * 'filterAction:select'
+             * 'filterAction:unselect'
+
+            These calls are documented below, in order of their execution on a typical
+            category page. Note that while the example shows how a page might be rendered
+            client-side using a programmatic approach, note that populating the data for
+            these requests on the server side is also possible; see category-page.html
+            in this directory for an example.
+
+        -->
+
+        <script type="text/javascript">
+
+            // BEGIN product impression event logic
+            var numResults = Number(document.querySelector('#total-results-count').textContent),
+                productList = document.querySelectorAll('.product-category-grid > .product-tile'),
+                pageNum = Number(document.querySelector('#paginator .current').textContent);
+
+            if (productList.length > 0) {
+
+                // Start the product impression tracking  with "searchResults:addResults",
+                // providing the parameters described below.
+                //
+                $EC.track('searchResults:addResults', {
+                    method: 'browse',            // for category pages, the [method] should be "browse"
+                    query: 'Category Name',      // for category pages, [query] should be the category name
+                    num_results: numResults,     // the total number of products available in this category
+                    page_size: products.length,  // the number of products visble on this page
+                    page: pageNum                // the page number currently being viewed
+                });
+
+                // For each product on the page, make a "searchResults:addProduct"
+                // call, passing the product ID as the second parameter.
+                //
+                for (var i = 0; i < products.length; i++) {
+                    $EC.track('searchResults:addProduct', products[i].id);
+                }
+
+                // Push the impression event
+                //
+                $EC.track('send', 'searchResults');
+
+            }
+            // END product impression event logic
+
+            // BEGIN filter interaction event logic
+            jQuery('.filters .filter-value').on('click', function() {
+
+              var filterName = jQuery(this).closest('.filter-header').text().trim();
+              var filterValue = jQuery(this).find('label').text().trim();
+              var action = jQuery(this).find('input[type=checkbox]').prop('checked') ? 'select' : 'unselect'
+
+              $EC.track('filterAction:' + action, {
+                filterName: filterName,
+                filterValue: filterValue
+              });
+
+            });
+            // END filter interaction event logic
+
+        </script>
 
     </body>
 
